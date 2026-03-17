@@ -1,0 +1,110 @@
+[
+    {
+        "label": "tab1",
+        "info": "텍스트를 입력할 수 있는 함수입니다.",
+        "data": [
+            {
+                "title": "st.title, st.header, st.subheader",
+                "code": "import streamlit as st\n\nst.title(\"Title\")\nst.header(\"Header\")\nst.subheader(\"Subheader\")"
+            },
+            {
+                "title": "st.text",
+                "code": "import streamlit as st\n\nst.text(\"이것은 일반 텍스트입니다.\")"
+            },
+            {
+                "title": "st.markdown",
+                "code": "import streamlit as st\n\nst.markdown('''\n# Markdown\n안녕하세요 **markdown** 형식으로 작성할 수 있는 함수입니다.\n''')"
+            },
+            {
+                "title": "st.code",
+                "code": "import streamlit as st\n\nst.code(\"print('Hello, World!')\")"
+            }
+        ]
+    },
+    {
+        "label": "tab2",
+        "info": "사용자에게 텍스트를 입력받을 수 있는 함수입니다.\n직접 입력해보면, 결과가 아래에 출력됩니다.",
+        "data": [
+            {
+                "title": "st.text_input",
+                "code": "import streamlit as st\n\nname = st.text_input(label=\"이름\", placeholder=\"이름을 입력하세요\")\nst.text(name)"
+            },
+            {
+                "title": "st.text_area",
+                "code": "import streamlit as st\n\ncontent = st.text_area(\n\tlabel=\"문의사항\",\n\tplaceholder=\"문의사항을 자세히 입력해주세요\",\n\theight=200\n)\nst.text(content)"
+            }
+        ]
+    },
+    {
+        "label": "tab3",
+        "info": "사용자가 선택하여 입력받을 수 있는 함수입니다.\n직접 입력해보면, 결과가 아래에 출력됩니다.",
+        "data": [
+            {
+                "title": "st.number_input",
+                "code": "import streamlit as st\n\nnumber = st.number_input(\n\tlabel=\"몇 개를 생성할까요?\",\n\tmin_value=1,\n\tmax_value=5,\n\tvalue=3\n)\nst.text(f\"number: {number}\")"
+            },
+            {
+                "title": "st.select_slider",
+                "code": "import streamlit as st\n\nlength = st.select_slider(\n\tlabel=\"문자열 길이\",\n\toptions=(100,200,300,400,500),\n\tvalue=200\n)\nst.text(f\"length: {length}\")"
+            },
+            {
+                "title": "st.radio",
+                "code": "import streamlit as st\n\noption = st.radio(\n\tlabel=\"카테고리를 선택하세요\",\n\toptions=[\"뉴스\", \"블로그\", \"기획안\"],\n\tindex=1\n)\nst.text(f\"선택한 항목: {option}\")"
+            },
+            {
+                "title": "st.selectbox",
+                "code": "import streamlit as st\n\nchoice = st.selectbox(\n\tlabel=\"콘텐츠 유형을 선택하세요\",\n\toptions=[\"유튜브\", \"인스타그램\", \"블로그\"],\n\tindex=1\n)\nst.text(f\"선택된 콘텐츠 유형: {choice}\")"
+            },
+            {
+                "title": "st.multiselect",
+                "code": "import streamlit as st\n\nchoices = st.multiselect(\n\tlabel=\"관심 있는 주제를 선택하세요\",\n\toptions=[\"AI\", \"데이터 사이언스\", \"웹 개발\"],\n\tdefault=[\"AI\",\"데이터 사이언스\"]\n)\nst.text(f\"선택한 주제: {', '.join(choices)}\")"
+            }
+        ]
+    },
+    {
+        "label": "tab4",
+        "info": "버튼을 생성하는 함수입니다.",
+        "data": [
+            {
+                "title": "st.button",
+                "code": "import streamlit as st\n\nbutton = st.button(\n\tlabel=\"로그인\",\n\tkey=\"login_btn1\"\n)\nif button:\n\tst.text(\"로그인 버튼이 클릭되었습니다.\")"
+            },
+            {
+                "title": "st.button",
+                "code": "import streamlit as st\n\nbutton = st.button(\n\tlabel=\"로그인\",\n\ttype=\"primary\",\n\tkey=\"login_btn2\"\n)\nif button:\n\tst.text(\"로그인 버튼이 클릭되었습니다.\")"
+            },
+            {
+                "title": "st.button",
+                "code": "import streamlit as st\n\nbutton = st.button(\n\tlabel=\"로그인\",\n\tuse_container_width=True,\n\tkey=\"login_btn3\"\n)\nif button:\n\tst.text(\"로그인 버튼이 클릭되었습니다.\")"
+            }
+        ]
+    },
+    {
+        "label": "tab5",
+        "info": "파일을 업로드할 수 있는 함수입니다.\n직접 업로드해보면, 결과가 아래에 출력됩니다.",
+        "data": [
+            {
+                "title": "st.file_uploader",
+                "code": "import streamlit as st\n\n# 텍스트파일 업로드(sample.txt)\nuploaded_file = st.file_uploader(\"텍스트 파일을 업로드하세요\", type=[\"txt\"])\nif uploaded_file is not None:\n\tcontent = uploaded_file.read().decode(\"utf-8\")\n\tst.text(content)"
+            },
+            {
+                "title": "st.file_uploader",
+                "code": "import streamlit as st\n\n# 이미지파일 업로드(sample.jpeg)\nuploaded_file = st.file_uploader(\n\t\"이미지 파일을 업로드하세요\",\n\ttype=[\"jpg\", \"jpeg\", \"png\"]\n)\nif uploaded_file is not None:\n\tst.image(uploaded_file)"
+            }
+        ]
+    },
+    {
+        "label": "tab6",
+        "info": "st.session_state에 대한 설명입니다. 버튼을 여러 번 클릭해 사용 여부에 따른 차이를 체험해보세요.",
+        "data": [
+            {
+                "title": "st.session_state가 없는 경우",
+                "code": "import streamlit as st\n\ncount = 0\nif st.button(\"클릭\"):\n\tcount += 1\nst.text(f\"버튼 누른 횟수: {count}\")"
+            },
+            {
+                "title": "st.session_state가 있는 경우",
+                "code": "import streamlit as st\n\nif \"count\" not in st.session_state:\n\tst.session_state[\"count\"] = 0\n\nif st.button(\"Click\"):\n\tst.session_state[\"count\"] += 1\nst.text(f\"버튼 누른 횟수: {st.session_state['count']}\")"
+            }
+        ]
+    }
+]
