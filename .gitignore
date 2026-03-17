@@ -8,4 +8,9 @@ wheels/
 
 # Virtual environments
 .venv
+.env
+
+# directories
 images/
+models/
+runs/
