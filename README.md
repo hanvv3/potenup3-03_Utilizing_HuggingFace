@@ -45,3 +45,7 @@ uv add torch torchvision torchaudio
 * 라이브러리 삭제 `uv remove torch torchvision torchaudio`
 * pyproject.toml 파일 아래에 위의 cuda를 명시
 * 다시 설치 `uv add torch torchvision torchaudio`
+* 재시작
+* 터미널에서 버전 확인 방법
+
+##

@@ -12,7 +12,7 @@ pages = [
         default=True
     ),
     st.Page(
-        page="pages/test.py",
+        page="pages/whatis0.py",
         title="What is 'Object Detection'?",
         icon="😊"
     ),
@@ -20,7 +20,17 @@ pages = [
         page="pages/01_object_detection.py",
         title="Object Detection",
         icon="😊"
-    )
+    ),
+    st.Page(
+        page="pages/whatis1.py",
+        title="What is 'Segmentation'?",
+        icon="😊"
+    ),
+    st.Page(
+        page="pages/02_segmentation.py",
+        title="Segmentation",
+        icon="😊"
+    ),
 ]
 
 nav = st.navigation(pages)
