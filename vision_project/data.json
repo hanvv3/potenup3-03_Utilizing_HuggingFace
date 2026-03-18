@@ -75,7 +75,7 @@
             },
             {
                 "title": "st.button",
-                "code": "import streamlit as st\n\nbutton = st.button(\n\tlabel=\"로그인\",\n\tuse_container_width=True,\n\tkey=\"login_btn3\"\n)\nif button:\n\tst.text(\"로그인 버튼이 클릭되었습니다.\")"
+                "code": "import streamlit as st\n\nbutton = st.button(\n\tlabel=\"로그인\",\n\twidth='stretch',\n\tkey=\"login_btn3\"\n)\nif button:\n\tst.text(\"로그인 버튼이 클릭되었습니다.\")"
             }
         ]
     },
