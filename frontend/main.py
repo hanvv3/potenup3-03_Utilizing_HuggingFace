@@ -31,6 +31,16 @@ pages = [
         title="Segmentation",
         icon="😊"
     ),
+    st.Page(
+        page="pages/whatis2.py",
+        title="What is 'CLIP'?",
+        icon="😊"
+    ),
+    st.Page(
+        page="pages/03_clip.py",
+        title="CLIP",
+        icon="😊"
+    ),
 ]
 
 nav = st.navigation(pages)
