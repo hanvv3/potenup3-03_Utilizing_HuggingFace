@@ -6,9 +6,12 @@ dist/
 wheels/
 *.egg-info
 
+# api keys
+.env
+google_vision_api.json
+
 # Virtual environments
 .venv
-.env
 
 # directories
 images/
