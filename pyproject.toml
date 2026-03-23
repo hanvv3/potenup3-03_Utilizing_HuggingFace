@@ -14,16 +14,19 @@ dependencies = [
     "koreanize-matplotlib>=0.1.1",
     "matplotlib>=3.10.8",
     "mediapipe==0.10.14",
+    "numpy>=2.4.3",
     "opencv-contrib-python>=4.13.0.92",
     "pillow>=12.1.1",
     "requests>=2.32.5",
     "roboflow>=1.2.16",
+    "scikit-learn>=1.8.0",
     "streamlit>=1.55.0",
     "torch>=2.10.0",
     "torchvision>=0.25.0",
     "transformers>=5.3.0",
     "translate>=3.8.0",
     "ultralytics>=8.4.22",
+    "xgboost>=3.2.0",
 ]
 
 [tool.uv.sources]
