@@ -171,3 +171,33 @@ async def predict_clip( # 함수 이름도 직관적으로 yolo -> sam으로 변
         "time": now,
         "similarity": results_df.to_dict(orient="records")
     }
+    
+##################################################################
+# 챗봇 엔드포인트 만들기
+##################################################################
+from pydantic import BaseModel
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+client = OpenAI()
+
+def chatbot(user_message):
+    response = client.responses.create(
+        model='gpt-5-nano',
+        input=[
+            {'role': 'system', 'content': '당신은 친절한 챗봇입니다.'},
+            {'role': 'user', 'content': user_message}
+        ]
+    )
+    
+    return response.output_text
+
+class ChatRequest(BaseModel):
+    message: str
+
+@app.post("/chat")
+async def chat(req: ChatRequest):
+    response = chatbot(req.message)
+    
+    return {'text': response}

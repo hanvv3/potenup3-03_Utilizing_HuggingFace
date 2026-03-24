@@ -41,6 +41,11 @@ pages = [
         title="CLIP",
         icon="😊"
     ),
+    st.Page(
+        page="pages/04_chatbot_api.py",
+        title="Chatbot using API's",
+        icon="😊"
+    ),
 ]
 
 nav = st.navigation(pages)
