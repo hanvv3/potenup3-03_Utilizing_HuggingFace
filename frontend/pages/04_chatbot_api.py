@@ -3,7 +3,7 @@ import requests
 
 CHAT_URL = 'http://localhost:8080/chat'
 
-st.title("챗봇 만들기")
+st.title("자기가 사용자라고 착각하는 챗봇 만들기")
 
 # 저장소 만들기
 if 'chat_history' not in st.session_state:
@@ -20,12 +20,15 @@ data = {
     'message': user_input
 }
 
-response = requests.post(
-    url=CHAT_URL,
-    json=data
-)
-if response.status_code == 200:
-    answer = response.json()['text']
+try:
+    response = requests.post(
+        url=CHAT_URL,
+        json=data
+    )
+    if response.status_code == 200:
+        answer = response.json()['text']
+except:
+    answer = 'LLM에 접근할 수 없는 상태입니다.'
 
 if user_input:
     # 챗 표시
