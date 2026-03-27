@@ -1,6 +1,7 @@
-from fastapi import FastAPI, UploadFile, File, Form # Form 추가!
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from contextlib import asynccontextmanager
 import shutil
+import tempfile
 import os
 import io
 import numpy as np
@@ -178,6 +179,7 @@ async def predict_clip( # 함수 이름도 직관적으로 yolo -> sam으로 변
 from pydantic import BaseModel
 from openai import OpenAI
 from dotenv import load_dotenv
+from typing import List
 
 load_dotenv()
 client = OpenAI()
@@ -281,3 +283,104 @@ async def chat(req: ChatRequest):
     response = chatbot(req.message, system_prompt)
     
     return {'text': response}
+
+
+
+
+def chatbot2(chat_history, system_prompt):
+    input_list = [{'role':'system', 'content': system_prompt}]
+    for chat in chat_history:
+        if chat.role =='ai':
+            role = 'assistant'
+        else:
+            role = 'user'
+    
+        input_list.append(
+            {'role': role, 'content': chat.content}
+        )
+        
+    response = client.responses.create(
+        model='gpt-5-nano',
+        input=input_list
+    )
+    
+    return response.output_text
+
+class Message(BaseModel):
+    role: str
+    content: str
+    
+class ChatHistoryRequest(BaseModel):
+    history: List[Message]
+
+@app.post("/chat_with_history")
+async def chat_with_history(req: ChatHistoryRequest):
+    response = chatbot2(req.history, system_prompt)
+    
+    return {'text': response}
+
+
+
+import speech_recognition as sr
+
+system_prompt = """
+너는 회의록 정리 전문가다.
+입력은 회의 녹취 텍스트다.
+반드시 markdown 형식으로만 출력하라.
+
+다음 구조를 따라라:
+
+# 회의 요약
+
+## 핵심 결론
+- 핵심 내용을 3~5개 bullet로 정리
+
+## 주요 논의 사항
+- 논의된 주제를 bullet로 정리
+
+## 결정된 사항
+- 확정된 결정사항만 정리
+
+## 후속 액션 아이템
+- 담당자 / 할 일 / 기한 형태로 정리
+- 담당자가 불명확하면 '미정'으로 표기
+
+## 참고 메모
+- 필요한 추가 메모 정리
+
+반드시 markdown 본문만 출력하라.
+"""
+
+@app.post("/summarize_audio")
+async def summarize_audio(file: UploadFile = File(...)):
+    try:
+        suffix = os.path.splitext(file.filename)[1] or ".wav"
+
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(await file.read())
+            tmp_path = tmp.name
+
+        with open(tmp_path, "rb") as audio_file:
+            transcript = client.audio.transcriptions.create(
+                model="gpt-4o-mini-transcribe",
+                file=audio_file,
+            )
+
+        transcript_text = transcript.text
+        markdown_result = chatbot(transcript_text, system_prompt)
+
+        return {
+            "filename": file.filename,
+            "transcript": transcript_text,
+            "markdown": markdown_result,
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    finally:
+        try:
+            if "tmp_path" in locals() and os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        except Exception:
+            pass
